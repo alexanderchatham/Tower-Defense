@@ -14,30 +14,45 @@ public class GameMap : MonoBehaviour {
 
     BuildManager buildManager;
     public GameObject nodeBlueprint;
+    private int mapWidth = 20;
+    private int mapHeight = 70;
+
+
+
+    public static GameMap instance;
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("More than one GameMap in scene!");
+            return;
+        }
+
+        instance = this;
+    }
+
+
     // Use this for initialization
     void Start () {
 
         buildManager = BuildManager.instance;
         //initializing game map
-        nodeMem[] nodeMap = new nodeMem[320];
+        nodeMem[,] nodeMap = new nodeMem[mapHeight,mapWidth];
 
         //populate Gamemap
         int i = 0;
-        float x = 0;
-        float z = 0;
+        int j = 0;
 
-        while (i < nodeMap.Length)
+        for (i = 0; i < mapWidth; i++)
         {
 
-            x = i % 16;
+            for (j = 0; j < mapHeight; j++) {
 
-            if (i >= (16 + 16 * z))
-                z++;
-
-            nodeMap[i].hasTower = false;
-            nodeMap[i].selectedNode = Instantiate(nodeBlueprint);
-            nodeMap[i].selectedNode.transform.position = new Vector3(x*.5f-4f,-.45f,90f-z*.5f);
-            i++;
+                nodeMap[j,i].hasTower = false;
+                nodeMap[j,i].selectedNode = Instantiate(nodeBlueprint);
+                nodeMap[j,i].selectedNode.transform.position = new Vector3(i * .5f - 4.75f, -.45f, 98f - j * .5f);
+            }
         }
 
     }
