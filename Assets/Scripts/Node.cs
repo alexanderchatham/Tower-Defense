@@ -21,7 +21,6 @@ public class Node : MonoBehaviour {
     {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
-
         buildManager = BuildManager.instance;
     }
 
@@ -41,7 +40,7 @@ public class Node : MonoBehaviour {
         if (!buildManager.CanBuild)
             return;
 
-         buildManager.BuildTurretOn(this);
+        buildManager.BuildTurretOn(this);
         }
 
     private void OnMouseEnter()

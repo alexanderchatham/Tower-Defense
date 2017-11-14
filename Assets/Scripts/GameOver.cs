@@ -9,6 +9,7 @@ public class GameOver : MonoBehaviour{
     void OnEnable()
     {
         roundsText.text = PlayerStats.Rounds.ToString();
+        Time.timeScale = 0f;
     }
 
     public void Retry()

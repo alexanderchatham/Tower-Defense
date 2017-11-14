@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class SellUpgrade : MonoBehaviour {
 
     public Color hoverColor;
-
+    public Node parentNode;
     public GameObject selfReference;
 
     private Renderer rend;
@@ -61,7 +61,6 @@ public class SellUpgrade : MonoBehaviour {
     public void sell()
     {
         PlayerStats.Money += 100 + 50 * turret.upgrades;
-
         Destroy(selfReference);
 
     }

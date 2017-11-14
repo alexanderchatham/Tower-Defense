@@ -11,6 +11,8 @@ TagManager:
   - Fader
   - dontmove
   - listlast
+  - Enemy
+  - End
   layers:
   - Default
   - TransparentFX

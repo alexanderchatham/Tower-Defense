@@ -295,6 +295,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeBlueprint: {fileID: 398479460}
+  Parent: {fileID: 1290213323}
+  End: {fileID: 1700387883}
+  BestRoute: []
+  turret: {fileID: 0}
 --- !u!1001 &9240066
 Prefab:
   m_ObjectHideFlags: 0
@@ -4605,8 +4609,9 @@ GameObject:
   - component: {fileID: 440769559}
   - component: {fileID: 440769558}
   - component: {fileID: 440769562}
+  - component: {fileID: 440769563}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Heads Up Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4675,7 +4680,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 440769557}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.4241994, y: 0, z: 0, w: 0.90556884}
   m_LocalPosition: {x: 0, y: 0, z: 86.78}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
@@ -4685,10 +4690,10 @@ RectTransform:
   - {fileID: 2126654247}
   m_Father: {fileID: 0}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50.2, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.5}
+  m_AnchoredPosition: {x: 0, y: 3.3}
   m_SizeDelta: {x: 230, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &440769562
@@ -4723,6 +4728,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &440769563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440769557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de4a59ec2cd1d346b7a4b2a892ef85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
 --- !u!1001 &444913191
 Prefab:
   m_ObjectHideFlags: 0
@@ -15941,8 +15958,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1700387884}
   m_Layer: 0
-  m_Name: Waypoint (14)
-  m_TagString: Untagged
+  m_Name: End Waypoint
+  m_TagString: End
   m_Icon: {fileID: 8220585740371884164, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16123,12 +16140,12 @@ Prefab:
     - target: {fileID: 224850256841385622, guid: 1806b630148594b448b10482f71312f3,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 596.0499
+      value: 343.80438
       objectReference: {fileID: 0}
     - target: {fileID: 224850256841385622, guid: 1806b630148594b448b10482f71312f3,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -54.600014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224850256841385622, guid: 1806b630148594b448b10482f71312f3,
         type: 2}
@@ -16967,7 +16984,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 764ea7915f1f7c74ea5850b0e98ce210, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

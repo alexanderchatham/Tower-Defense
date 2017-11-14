@@ -16,8 +16,11 @@ public class GameMap : MonoBehaviour {
     public GameObject nodeBlueprint;
     private int mapWidth = 20;
     private int mapHeight = 70;
-
-
+    //waypoints 
+    public GameObject Parent;
+    public GameObject End;
+    public GameObject[] BestRoute;
+    public Turret turret;
 
     public static GameMap instance;
 
@@ -32,7 +35,6 @@ public class GameMap : MonoBehaviour {
         instance = this;
     }
 
-
     // Use this for initialization
     void Start () {
 
@@ -44,18 +46,54 @@ public class GameMap : MonoBehaviour {
         int i = 0;
         int j = 0;
 
-        for (i = 0; i < mapWidth; i++)
+        for (i = 0; i < mapHeight; i++)
         {
 
-            for (j = 0; j < mapHeight; j++) {
+            for (j = 0; j < mapWidth; j++) {
 
-                nodeMap[j,i].hasTower = false;
-                nodeMap[j,i].selectedNode = Instantiate(nodeBlueprint);
-                nodeMap[j,i].selectedNode.transform.position = new Vector3(i * .5f - 4.75f, -.45f, 98f - j * .5f);
+                nodeMap[i,j].hasTower = false;
+                nodeMap[i,j].selectedNode = Instantiate(nodeBlueprint);
+                nodeMap[i,j].selectedNode.transform.position = new Vector3(j * .5f - 4.75f, -.45f, 98f - i * .5f);
             }
         }
-
+        StartCoroutine("findBestRoute",nodeMap);
     }
 
-    
+    private void Update()
+    {
+        
+    }
+
+    private void findBestRoute(nodeMem[,] nodeMap)
+    {
+
+        int i = 0;
+        int j = 0;
+
+
+        // update the hastower bools
+        for (i = 0; i < mapHeight; i++)
+        {
+
+            for (j = 0; j < mapWidth; j++)
+            {
+                turret = null;
+                turret = nodeMap[i, j].selectedNode.GetComponentInChildren(typeof(Turret)) as Turret;
+                if (turret)
+                {
+                    nodeMap[i, j].hasTower = true;
+                }
+            }
+        }
+        //To start find an empty box at the top
+        i = mapWidth / 2;
+        while (nodeMap[0, i].hasTower)
+        {
+           if(i  <  mapWidth)
+                i ++;
+           if(i == mapWidth)
+                i = 0;
+        }
+    }
+
 }
