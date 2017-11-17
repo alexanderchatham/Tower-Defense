@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour {
     private Vector3 dir;
     public float speed = 70f;
 
-    public int damage = 50;
+    public int damage = 10;
 
     public float explosionRadius = 0f;
     public GameObject ImpactEffect;

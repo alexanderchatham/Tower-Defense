@@ -10,6 +10,7 @@ public class BuildManager : MonoBehaviour
     public NodeUI nodeUI;
 
     public GameObject nodeBlueprint;
+    public GameMap gameMap;
 
     void Awake ()
     {
@@ -21,7 +22,12 @@ public class BuildManager : MonoBehaviour
 
         instance = this;
     }
-    
+
+    private void Start()
+    {
+        gameMap = GameMap.instance;
+    }
+
     public GameObject buildEffect;
     private SellUpgrade selectedTurret;
 
@@ -45,6 +51,7 @@ public class BuildManager : MonoBehaviour
             Destroy(effect, 5f);
 
             Debug.Log("Turret built! Money left: " + PlayerStats.Money);
+            gameMap.findBestRoute();
         }
     }
 
