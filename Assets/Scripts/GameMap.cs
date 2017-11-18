@@ -66,9 +66,9 @@ public class GameMap : MonoBehaviour {
 
     public void findBestRoute()
     {
-        
-        int i = 0;
-        int j = 0;
+        bestRoute = new ArrayList();
+        int i;
+        int j;
         Transform newWaypoint = (Transform)Instantiate(End);
         // update the hastower bools
         for (i = 0; i < mapHeight; i++)
@@ -76,25 +76,24 @@ public class GameMap : MonoBehaviour {
 
             for (j = 0; j < mapWidth; j++)
             {
-                Node node = nodeMap[i, j].script;
-                if (node.turret)
+               
+                if (nodeMap[i, j].script.turret != null)
                 {
                     nodeMap[i, j].hasTower = true;
                     print("node i:" + i + " j:" + j + " has a turret!");
                 }
             }
         }
-        //To start find an empty box at the top, not a very efficient way but should work.
-        j = 0;
-        i = 0;
-        print("i is: " + i + "\nj is:" + j);
-        newWaypoint = Instantiate(End);
-        Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y +1f, nodeMap[i, j].selectedNode.transform.position.z );
-        newWaypoint.position = offsetPosition;
-        bestRoute.Add(newWaypoint);
+        //get the first point in which the enemy will enter the maze
+        firstPoint();
+       
+
+
+
         bestRoute.Add(End);
-        Waypoints instance = Waypoints.instance;
-        instance.setPoints(bestRoute);
+
+        // add points to instance
+        Waypoints.instance.setPoints(bestRoute);
         /*
         newWaypoint.SetParent(Parent, true);
         newWaypoint.SetAsFirstSibling();
@@ -102,4 +101,30 @@ public class GameMap : MonoBehaviour {
         */
     }
 
+    private void firstPoint()
+    {
+        //To start find an empty box at the top
+        int i = 0;
+        int j = mapWidth / 2;
+        int mag = 1;
+        while (nodeMap[i, j].hasTower)
+        {
+            if (nodeMap[i, j + mag].hasTower == false)
+            {
+                j = j + mag;
+            }
+            if (nodeMap[i, j - mag].hasTower == false)
+            {
+                j = j - mag;
+            }
+            else
+                mag++;
+        }
+
+        print("i is: " + i + "\nj is:" + j);
+        Transform newWaypoint = (Transform)Instantiate(End);
+        Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
+        newWaypoint.position = offsetPosition;
+        bestRoute.Add(newWaypoint);
+    }
 }

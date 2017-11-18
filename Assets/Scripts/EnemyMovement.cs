@@ -17,11 +17,15 @@ public class EnemyMovement : MonoBehaviour {
     {
         enemy = GetComponent<Enemy>();
 
-        target = Waypoints.points[0];
+        target = Waypoints.points[wavepointIndex];
     }
 
     private void Update()
     {
+        if(target != Waypoints.points[wavepointIndex])
+        {
+            target = Waypoints.points[wavepointIndex];
+        }
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
 

@@ -22,12 +22,12 @@ public class HudController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown("w") || Input.mousePosition.y >= Screen.height - panBorderThickness && this.transform.position.z < 95)
+        if (Input.GetKeyDown("w") || Input.mousePosition.y >= Screen.height - panBorderThickness && this.transform.position.z < 92)
         {
                 transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }
 
-        if (Input.GetKeyDown("s") || Input.mousePosition.y <= panBorderThickness && this.transform.position.z > 0)
+        if (Input.GetKeyDown("s") || Input.mousePosition.y <= panBorderThickness && this.transform.position.z > 64)
         {
                 transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
         }

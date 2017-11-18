@@ -62,6 +62,6 @@ public class SellUpgrade : MonoBehaviour {
     {
         PlayerStats.Money += 100 + 50 * turret.upgrades;
         Destroy(selfReference);
-
+        GameMap.instance.findBestRoute();
     }
 }

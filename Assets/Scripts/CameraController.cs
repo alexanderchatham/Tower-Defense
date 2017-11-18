@@ -22,13 +22,13 @@ public class CameraController : MonoBehaviour {
 
         if (Input.GetKeyDown("w")|| Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
-            if(transform.position.z<85f)
+            if(transform.position.z<90f)
                 transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }
 
         if (Input.GetKeyDown("s") || Input.mousePosition.y <= panBorderThickness)
         {
-            if(transform.position.z>-12f)
+            if(transform.position.z>62f)
             transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
         }
 

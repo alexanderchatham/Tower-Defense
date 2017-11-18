@@ -8,6 +8,7 @@ public class Waypoints : MonoBehaviour {
 
     public static Transform[] points;
     public static Waypoints instance;
+    private static Transform end;
     private void Awake()
     {
         if (instance != null)
@@ -22,6 +23,7 @@ public class Waypoints : MonoBehaviour {
         for (int i = 0; i < points.Length; i++)
         {
             points[i] = transform.GetChild(i);
+            end = points[i];
         }
     }
 
@@ -33,14 +35,12 @@ public class Waypoints : MonoBehaviour {
 
     public void setPoints(ArrayList points_)
     {
-        for (int i = 0; i < points_.Count; i++)
-            try {
-                points[i] = points_[i] as Transform;
-            } catch (System.Exception e)
-            {
-
-            }
+        points = new Transform[points_.Count];
+        for (int i = 0; i < points_.Count -1; i++)
+        {
+            points[i] = points_[i] as Transform;
+        }
+        points[points_.Count - 1] = end;
     }
-
 
 }

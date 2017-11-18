@@ -45,7 +45,9 @@ public class BuildManager : MonoBehaviour
         {
             PlayerStats.Money -= turretToBuild.cost;
             GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
+            Turret Tscript = turret.GetComponent<Turret>();
             node.turret = turret;
+            
 
             GameObject effect = (GameObject)Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
             Destroy(effect, 5f);

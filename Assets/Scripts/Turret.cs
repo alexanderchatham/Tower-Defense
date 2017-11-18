@@ -39,6 +39,7 @@ public class Turret : MonoBehaviour {
 
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public Node node;
 
 	// Use this for initialization
 	void Start () {
