@@ -7,7 +7,9 @@ public class Node : MonoBehaviour {
     public Color notenoughmoney;
     public Vector3 positionOffSet;
 
-    public int arrayPosition;
+    private bool turretSwitch = false;
+    public int i;
+    public int j;
 
     [Header("Optional")]
     public GameObject turret;
@@ -22,6 +24,20 @@ public class Node : MonoBehaviour {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
         buildManager = BuildManager.instance;
+    }
+
+    private void Update()
+    {
+        if (!turret && turretSwitch == true)
+        {
+            GameMap.instance.SetNodeBool(i, j, false);
+            turretSwitch = false;
+        }
+        if (turret&& turretSwitch == false)
+        {
+            GameMap.instance.SetNodeBool(i, j, true);
+            turretSwitch = true;
+        }
     }
 
     public Vector3 GetBuildPosition ()

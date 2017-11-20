@@ -145,9 +145,11 @@ MonoBehaviour:
     type: 2}
   timeBetweenWaves: 5
   spawnPoint: {fileID: 1270152687}
+  waveNumber: 0
   waveCountdownText: {fileID: 1212356889}
   waveCounter: {fileID: 1939573105}
   isOver: 1
+  instance: {fileID: 0}
 --- !u!4 &5739656
 Transform:
   m_ObjectHideFlags: 0
@@ -192,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0925f67eadf084e45b9f3164fada79a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMoney: 1400
+  startMoney: 4500
   startLives: 10
 --- !u!114 &5739659
 MonoBehaviour:
@@ -2904,7 +2906,7 @@ GameObject:
   - component: {fileID: 1290213324}
   m_Layer: 0
   m_Name: Waypoints
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4088,8 +4090,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1700387884}
   m_Layer: 0
-  m_Name: End Waypoint
-  m_TagString: End
+  m_Name: Waypoint
+  m_TagString: Waypoint
   m_Icon: {fileID: 8220585740371884164, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4162,7 +4164,7 @@ Prefab:
     - target: {fileID: 224850256841385622, guid: 1806b630148594b448b10482f71312f3,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -54.600014
       objectReference: {fileID: 0}
     - target: {fileID: 224850256841385622, guid: 1806b630148594b448b10482f71312f3,
         type: 2}

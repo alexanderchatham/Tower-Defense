@@ -13,6 +13,7 @@ TagManager:
   - listlast
   - Enemy
   - End
+  - Waypoint
   layers:
   - Default
   - TransparentFX

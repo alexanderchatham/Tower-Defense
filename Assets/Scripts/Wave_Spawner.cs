@@ -8,10 +8,22 @@ public class Wave_Spawner : MonoBehaviour {
     public float timeBetweenWaves = 5f;
     private float countdown = 2f;
     public Transform spawnPoint;
-    private int waveNumber = 0;
+    public int waveNumber = 0;
     public Text waveCountdownText;
     public Text waveCounter;
     public bool isOver = true;
+    private Transform enemy;
+    public Wave_Spawner instance;
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("More than one GameMap in scene!");
+            return;
+        }
+
+        instance = this;
+    }
     void Update()
     {
         if (countdown <= 0f)
@@ -50,7 +62,9 @@ public class Wave_Spawner : MonoBehaviour {
 
     void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+       enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        Enemy script = enemy.GetComponent<Enemy>();
+        script.health = 100 + waveNumber * 10;
     }
 
 }

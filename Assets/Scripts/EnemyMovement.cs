@@ -24,7 +24,10 @@ public class EnemyMovement : MonoBehaviour {
     {
         if(target != Waypoints.points[wavepointIndex])
         {
-            target = Waypoints.points[wavepointIndex];
+            if (target == Waypoints.points[wavepointIndex + 1])
+                wavepointIndex++;
+            else
+                target = Waypoints.points[wavepointIndex];
         }
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
