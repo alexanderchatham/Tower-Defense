@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour {
         target = Waypoints.points[wavepointIndex];
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(target != Waypoints.points[wavepointIndex])
         {

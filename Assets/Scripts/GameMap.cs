@@ -9,6 +9,7 @@ struct nodeMem
     public bool hasTower;
     public GameObject selectedNode;
     public Node script;
+    public Transform waypoint;
 }
 
 public class GameMap : MonoBehaviour {
@@ -64,6 +65,10 @@ public class GameMap : MonoBehaviour {
                 nodeMap[i, j].script.i = i;
                 nodeMap[i, j].script.j = j;
                 nodeMap[i,j].selectedNode.transform.position = new Vector3(j * .5f - 4.75f, -.45f, 98f - i * .5f);
+
+                nodeMap[i,j].waypoint = (Transform)Instantiate(End);
+                Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
+                nodeMap[i, j].waypoint.position = offsetPosition;
             }
         }
     }
@@ -76,7 +81,6 @@ public class GameMap : MonoBehaviour {
     public void findBestRoute()
     {
         bestRoute.Clear();
-        Transform newWaypoint = (Transform)Instantiate(End);
         // update the hastower bools
         /*
         for (i = 0; i < mapHeight; i++)
@@ -143,10 +147,7 @@ public class GameMap : MonoBehaviour {
         iglobal = i;
         jglobal = j;
         print("i is: " + i + "\nj is:" + j);
-        Transform newWaypoint = (Transform)Instantiate(End);
-        Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-        newWaypoint.position = offsetPosition;
-        bestRoute.Add(newWaypoint);
+        bestRoute.Add(nodeMap[i,j].waypoint);
     }
 
 
@@ -156,10 +157,9 @@ public class GameMap : MonoBehaviour {
         // if i is at the bottom of the map end the find method and add the last waypoint
         if (i == mapHeight - 1)
         {
-            Transform newWaypoint = (Transform)Instantiate(End);
-            Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-            newWaypoint.position = offsetPosition;
-            bestRoute.Add(newWaypoint);
+
+            print("i is: " + i + " j is:" + j + "last");
+            bestRoute.Add(nodeMap[i, j].waypoint);
             return;
         }
         // if there is no tower below and we didnt just move up
@@ -168,10 +168,9 @@ public class GameMap : MonoBehaviour {
             i = i + 1;
             lastMove = 1;
             //add waypoint 
-            Transform newWaypoint = (Transform)Instantiate(End);
-            Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-            newWaypoint.position = offsetPosition;
-            bestRoute.Add(newWaypoint);
+
+            print("i is: " + i + "\nj is:" + j + "down");
+            bestRoute.Add(nodeMap[i, j].waypoint);
             //recursive call
             findEndOfMaze(i , j);
             return;
@@ -181,19 +180,15 @@ public class GameMap : MonoBehaviour {
         if (nodeMap[i + 1, j].hasTower)
         {
             //add waypoint 
-            Transform newWaypoint = (Transform)Instantiate(End);
-            Vector3 offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-            newWaypoint.position = offsetPosition;
-            bestRoute.Add(newWaypoint);
+            
             //will change, go right then go left to look right/left using magnitude
             //right
             if (j + 1 < mapWidth  && !nodeMap[i, j + 1].hasTower && lastMove != 3)
             {
                 j = j + 1;
-                newWaypoint = (Transform)Instantiate(End);
-                offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-                newWaypoint.position = offsetPosition;
-                bestRoute.Add(newWaypoint);
+
+                print("i is: " + i + " j is:" + j + "right");
+                bestRoute.Add(nodeMap[i, j].waypoint);
                 lastMove = 2;
                 findEndOfMaze(i , j);
                 return;
@@ -202,10 +197,8 @@ public class GameMap : MonoBehaviour {
             if (j - 1 >= 0 && !nodeMap[i,j - 1].hasTower && lastMove != 2)
             {
                 j = j - 1;
-                newWaypoint = (Transform)Instantiate(End);
-                offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-                newWaypoint.position = offsetPosition;
-                bestRoute.Add(newWaypoint);
+                print("i is: " + i + " j is:" + j + "left");
+                bestRoute.Add(nodeMap[i, j].waypoint);
                 lastMove = 3;
                 findEndOfMaze(i, j);
                 return;
@@ -215,11 +208,9 @@ public class GameMap : MonoBehaviour {
             if (i - 1 >= 0 && !nodeMap[i - 1, j].hasTower && lastMove != 1)
             {
                 i = i - 1;
-                newWaypoint = (Transform)Instantiate(End);
-                offsetPosition = new Vector3(nodeMap[i, j].selectedNode.transform.position.x, nodeMap[i, j].selectedNode.transform.position.y + 1f, nodeMap[i, j].selectedNode.transform.position.z);
-                newWaypoint.position = offsetPosition;
-                bestRoute.Add(newWaypoint);
-                lastMove = 3;
+                print("i is: " + i + " j is:" + j + "up");
+                bestRoute.Add(nodeMap[i, j].waypoint);
+                lastMove = 4;
                 findEndOfMaze(i, j);
                 return;
 
