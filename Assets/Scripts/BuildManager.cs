@@ -29,7 +29,7 @@ public class BuildManager : MonoBehaviour
     }
 
     public GameObject buildEffect;
-    private SellUpgrade selectedTurret;
+
 
     public bool CanBuild { get { return turretToBuild != null; } }
     public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
@@ -45,7 +45,6 @@ public class BuildManager : MonoBehaviour
         {
             PlayerStats.Money -= turretToBuild.cost;
             GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
-            Turret Tscript = turret.GetComponent<Turret>();
             node.turret = turret;
             
 
@@ -59,14 +58,12 @@ public class BuildManager : MonoBehaviour
 
     public void SelectTurret (SellUpgrade turret)
     {
-        selectedTurret = turret;
         turretToBuild = null;
         nodeUI.SetTarget(turret);
     }
 
     public void DeselectNode()
     {
-        selectedTurret = null;
         nodeUI.hide();
     }
 

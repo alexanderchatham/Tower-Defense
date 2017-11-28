@@ -6,7 +6,6 @@ public class SellUpgrade : MonoBehaviour {
     public Color hoverColor;
     public Node parentNode;
     public GameObject selfReference;
-
     private Renderer rend;
     private Color startColor;
 
@@ -62,6 +61,5 @@ public class SellUpgrade : MonoBehaviour {
     {
         PlayerStats.Money += 100 + 50 * turret.upgrades;
         Destroy(selfReference);
-        GameMap.instance.findBestRoute();
     }
 }

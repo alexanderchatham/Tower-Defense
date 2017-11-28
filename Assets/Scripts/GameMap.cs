@@ -13,32 +13,36 @@ struct nodeMem
 }
 
 public class GameMap : MonoBehaviour {
-
-    BuildManager buildManager;
+    
     public GameObject nodeBlueprint;
-    private int mapWidth = 20;
-    private int mapHeight = 70;
+    private int mapWidth = 10;
+    private int mapHeight = 30;
     private int iglobal;
     private int jglobal;
     private int lastMove;
+    private bool loopBool = false;
     //waypoints 
     public Transform Parent;
     public Transform End;
     public Turret turret;
     private nodeMem[,] nodeMap;
     public ArrayList bestRoute;
+    private Vector3 translation;
+    public Transform bufferwaypoint;
 
     public static GameMap instance;
 
     void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Debug.LogError("More than one GameMap in scene!");
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
             return;
         }
-
-        instance = this;
     }
 
     // Use this for initialization
@@ -46,7 +50,7 @@ public class GameMap : MonoBehaviour {
 
         bestRoute = new ArrayList();
 
-        buildManager = BuildManager.instance;
+        translation = new Vector3(0, .25f, 0);
         //initializing game map
         nodeMap = new nodeMem[mapHeight,mapWidth];
 
@@ -76,6 +80,11 @@ public class GameMap : MonoBehaviour {
     public void SetNodeBool(int i, int j, bool a)
     {
         nodeMap[i, j].hasTower = a;
+    }
+
+    public bool GetNodeBool(int i, int j)
+    {
+        return nodeMap[i, j].hasTower;
     }
 
     public void findBestRoute()
@@ -122,31 +131,47 @@ public class GameMap : MonoBehaviour {
     {
         //To start find an empty box at the top
         int i = 0;
-        int j = (mapWidth / 2) - 1;
+        loopBool = false;
+        int j = (mapWidth / 2) -1 ;
         int mag = 1;
-        while (nodeMap[i, j].hasTower)
+        while (!loopBool)
         {
-            if (j < 0 || j > mapWidth - 1)
+            if (nodeMap[i, j].hasTower == false)
+                loopBool = true;
+            if (j < 0 || j > mapWidth -1)
             {
                 //this is where I will add a method to tell the player they blocked the first row
             }
             //look at the j + mag position
-            if (j < mapWidth && nodeMap[i, j + mag].hasTower == false )
+            if (j + mag< mapWidth && nodeMap[i, j + mag].hasTower == false && !loopBool)
             {
                 j = j + mag;
+                print("j is :" + j);
+                loopBool = true;
             }
             //look at the j - mag position
-            if (j >= 0 && nodeMap[i, j - mag].hasTower == false)
+            if (j - mag >= 0 && nodeMap[i, j - mag].hasTower == false && !loopBool)
             {
                 j = j - mag;
+
+                print("j is :" + j);
+                loopBool = true;
+
             }
             //if neither place works increase the magnitude to spread the search out
-            else
+            else if(!loopBool)
                 mag++;
+            print("mag is :" + mag);
         }
         iglobal = i;
         jglobal = j;
-        print("i is: " + i + "\nj is:" + j);
+        print("i is: " + i + "\nj is:" + j + " first");
+
+        bufferwaypoint = nodeMap[i, j].waypoint.transform;
+        bufferwaypoint.Translate(translation);
+        bestRoute.Add(bufferwaypoint);
+
+
         bestRoute.Add(nodeMap[i,j].waypoint);
     }
 
@@ -154,68 +179,64 @@ public class GameMap : MonoBehaviour {
     //for last move variable 1 is down, 2 is right, 3 is left, and 4 is up
     private void findEndOfMaze(int i, int j)
     {
+       
         // if i is at the bottom of the map end the find method and add the last waypoint
         if (i == mapHeight - 1)
         {
 
-            print("i is: " + i + " j is:" + j + "last");
+            print("i is: " + i + " j is:" + j + " last");
             bestRoute.Add(nodeMap[i, j].waypoint);
             return;
         }
-        // if there is no tower below and we didnt just move up
+        // down
         if (!nodeMap[i + 1, j].hasTower && lastMove !=4)
         {
             i = i + 1;
             lastMove = 1;
             //add waypoint 
 
-            print("i is: " + i + "\nj is:" + j + "down");
+            print("i is: " + i + "\nj is:" + j + " down");
             bestRoute.Add(nodeMap[i, j].waypoint);
             //recursive call
             findEndOfMaze(i , j);
             return;
         }
-        
-        // if there is a tower below
-        if (nodeMap[i + 1, j].hasTower)
-        {
-            //add waypoint 
-            
-            //will change, go right then go left to look right/left using magnitude
-            //right
-            if (j + 1 < mapWidth  && !nodeMap[i, j + 1].hasTower && lastMove != 3)
+        //add waypoint 
+       //will change, go right then go left to look right/left
+        //right
+        if (j + 1 < mapWidth  && !nodeMap[i, j + 1].hasTower && lastMove != 3)
             {
                 j = j + 1;
 
-                print("i is: " + i + " j is:" + j + "right");
+                print("i is: " + i + " j is:" + j + " right");
                 bestRoute.Add(nodeMap[i, j].waypoint);
                 lastMove = 2;
                 findEndOfMaze(i , j);
                 return;
-            }
+        }
             //left
-            if (j - 1 >= 0 && !nodeMap[i,j - 1].hasTower && lastMove != 2)
+        if (j - 1 >= 0 && !nodeMap[i,j - 1].hasTower && lastMove != 2)
             {
                 j = j - 1;
-                print("i is: " + i + " j is:" + j + "left");
+                print("i is: " + i + " j is:" + j + " left");
                 bestRoute.Add(nodeMap[i, j].waypoint);
                 lastMove = 3;
                 findEndOfMaze(i, j);
                 return;
 
-            }
+        }
             //up
-            if (i - 1 >= 0 && !nodeMap[i - 1, j].hasTower && lastMove != 1)
+        if (i - 1 >= 0 && !nodeMap[i - 1, j].hasTower && lastMove != 1)
             {
                 i = i - 1;
-                print("i is: " + i + " j is:" + j + "up");
+                print("i is: " + i + " j is:" + j + " up");
                 bestRoute.Add(nodeMap[i, j].waypoint);
                 lastMove = 4;
                 findEndOfMaze(i, j);
                 return;
 
-            }
         }
+        
     }
 
 }

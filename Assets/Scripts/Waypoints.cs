@@ -40,7 +40,7 @@ public class Waypoints : MonoBehaviour {
         {
             points[i] = points_[i] as Transform;
         }
-        points[points_.Count - 1] = end;
+        points[points_.Count - 1 ] = end;
     }
 
 }

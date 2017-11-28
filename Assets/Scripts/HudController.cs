@@ -8,9 +8,6 @@ public class HudController : MonoBehaviour {
 
     private float panSpeed = 30f;
     private float panBorderThickness = 10f;
-    private float scrollSpeed = 5;
-    private float minY = 10f;
-    private float maxY = 80f;
 
     // Update is called once per frame
     void Update()
@@ -22,7 +19,7 @@ public class HudController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown("w") || Input.mousePosition.y >= Screen.height - panBorderThickness && this.transform.position.z < 92)
+        if (Input.GetKeyDown("w") || Input.mousePosition.y >= Screen.height - panBorderThickness && this.transform.position.z < 95)
         {
                 transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }

@@ -6,8 +6,7 @@ public class Node : MonoBehaviour {
     public Color hoverColor;
     public Color notenoughmoney;
     public Vector3 positionOffSet;
-
-    private bool turretSwitch = false;
+    
     public int i;
     public int j;
 
@@ -28,15 +27,16 @@ public class Node : MonoBehaviour {
 
     private void Update()
     {
-        if (!turret && turretSwitch == true)
+        //if there is not a turret and the turret switch is true set 
+        if (!turret && GameMap.instance.GetNodeBool(i,j) )
         {
             GameMap.instance.SetNodeBool(i, j, false);
-            turretSwitch = false;
+            GameMap.instance.findBestRoute();
         }
-        if (turret&& turretSwitch == false)
+        if (turret && !GameMap.instance.GetNodeBool(i, j))
         {
             GameMap.instance.SetNodeBool(i, j, true);
-            turretSwitch = true;
+            GameMap.instance.findBestRoute();
         }
     }
 

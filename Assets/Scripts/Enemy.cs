@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
     [HideInInspector]
     public float speed;
     public bool alive = true;
-    public float startSpeed = 2f;
+    public float startSpeed = 1.25f;
     public float health = 100;
 
     public int worth = 50;
