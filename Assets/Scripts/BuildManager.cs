@@ -11,6 +11,8 @@ public class BuildManager : MonoBehaviour
 
     public GameObject nodeBlueprint;
     public GameMap gameMap;
+    public GameObject lastBuild;
+    public int lastCost;
 
     void Awake ()
     {
@@ -34,6 +36,8 @@ public class BuildManager : MonoBehaviour
     public bool CanBuild { get { return turretToBuild != null; } }
     public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
 
+    
+
     public void BuildTurretOn(Node node)
     {
         if (PlayerStats.Money < turretToBuild.cost)
@@ -46,13 +50,13 @@ public class BuildManager : MonoBehaviour
             PlayerStats.Money -= turretToBuild.cost;
             GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
             node.turret = turret;
-            
+            lastBuild = turret;
+            lastCost = turretToBuild.cost;
 
             GameObject effect = (GameObject)Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
             Destroy(effect, 5f);
 
             Debug.Log("Turret built! Money left: " + PlayerStats.Money);
-            gameMap.findBestRoute();
         }
     }
 

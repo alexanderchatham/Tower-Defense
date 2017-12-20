@@ -13,6 +13,7 @@ public class Turret : MonoBehaviour {
     public float range = 15f;
     public float damageModifier = 0;
     public bool useMissile = false;
+    public bool tower = false;
     public int upgrades = 0;
 
     [Header("Use Bullets (default)")]
@@ -55,37 +56,41 @@ public class Turret : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-	    if (target == null)
+        if (GameMap.instance.blocked == false)
         {
+            if (target == null)
+            {
+                if (useLaser)
+                {
+                    if (lineRenderer.enabled)
+                    {
+                        lineRenderer.enabled = false;
+                        impactEffect.Stop();
+                        impactLight.enabled = false;
+                    }
+                }
+                return;
+
+            }
+
+
+            if (!tower)
+                LockOnTarget();
+
             if (useLaser)
             {
-                if (lineRenderer.enabled)
-                {
-                    lineRenderer.enabled = false;
-                    impactEffect.Stop();
-                    impactLight.enabled = false;
-                }
+                Laser();
             }
-            return;
-
-        }
-
-
-        LockOnTarget();
-
-        if (useLaser)
-        {
-            Laser();
-        }
-        else
-        {
-            if (fireCountdown <= 0f)
+            else
             {
-                Shoot();
-                fireCountdown = 1f / fireRate;
-            }
+                if (fireCountdown <= 0f)
+                {
+                    Shoot();
+                    fireCountdown = 1f / fireRate;
+                }
 
-            fireCountdown -= Time.deltaTime;
+                fireCountdown -= Time.deltaTime;
+            }
         }
     }
 

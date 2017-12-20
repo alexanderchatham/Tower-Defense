@@ -5,10 +5,12 @@ public class SellUpgrade : MonoBehaviour {
 
     public Color hoverColor;
     public Node parentNode;
+    //selfreference is set in editor
     public GameObject selfReference;
     private Renderer rend;
     private Color startColor;
 
+    public GameMap gameMap;
     BuildManager buildManager;
     public Turret turret;
 
@@ -17,6 +19,7 @@ public class SellUpgrade : MonoBehaviour {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
 
+        gameMap = GameMap.instance;
         buildManager = BuildManager.instance;
     }
     private void OnMouseDown()

@@ -20,24 +20,27 @@ public class EnemyMovement : MonoBehaviour {
         target = Waypoints.points[wavepointIndex];
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        if(target != Waypoints.points[wavepointIndex])
+        if (GameMap.instance.blocked == false)
         {
-            if (target == Waypoints.points[wavepointIndex + 1])
-                wavepointIndex++;
-            else
-                target = Waypoints.points[wavepointIndex];
-        }
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
+            /*if(Waypoints.points[wavepointIndex] && target != Waypoints.points[wavepointIndex] )
+            {
+                if (target == Waypoints.points[wavepointIndex + 1])
+                    wavepointIndex++;
+                else
+                    target = Waypoints.points[wavepointIndex];
+            }*/
+            Vector3 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * enemy.speed * Time.deltaTime, Space.World);
 
-        if (Vector3.Distance(transform.position, target.position) <= 0.2f)
-        {
-            GetNextWaypoint();
-        }
+            if (Vector3.Distance(transform.position, target.position) <= 0.1f)
+            {
+                GetNextWaypoint();
+            }
 
-        enemy.speed = enemy.startSpeed;
+            enemy.speed = enemy.startSpeed;
+        }
     }
 
     void GetNextWaypoint()
@@ -45,6 +48,7 @@ public class EnemyMovement : MonoBehaviour {
         if (wavepointIndex >= Waypoints.points.Length - 1)
         {
             Destroy(gameObject);
+            Wave_Spawner.instance.enemyCount--;
             PlayerStats.Lives--;
             return;
         }

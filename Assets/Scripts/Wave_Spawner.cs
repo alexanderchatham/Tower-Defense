@@ -12,8 +12,11 @@ public class Wave_Spawner : MonoBehaviour {
     public Text waveCountdownText;
     public Text waveCounter;
     public bool isOver = true;
+    public bool startbool = false;
     private Transform enemy;
-    public Wave_Spawner instance;
+    public static Wave_Spawner instance;
+    public GameMap gamemap;
+    public int enemyCount = 0;
     void Awake()
     {
         if (instance != null)
@@ -24,24 +27,38 @@ public class Wave_Spawner : MonoBehaviour {
 
         instance = this;
     }
+
+    private void Start()
+    {
+        gamemap = GameMap.instance; 
+    }
+
     void Update()
     {
-        if (countdown <= 0f)
+        if (countdown <= 0f && startbool)
         {
+
+            gamemap.findBestRoute();
             StartCoroutine(SpawnWave());
             countdown = timeBetweenWaves;
             isOver = false;
+            startbool = false;
         }
 
         if (isOver)
         {
+            if(countdown > 0)
             countdown -= Time.deltaTime;
 
             waveCountdownText.text = Mathf.Round(countdown).ToString() + "    ";
         }
     }
 
-
+    public void startRound()
+    {
+        if(isOver)
+        startbool = true;
+    }
 
     IEnumerator SpawnWave ()
     {
@@ -50,10 +67,11 @@ public class Wave_Spawner : MonoBehaviour {
         waveNumber++;
         PlayerStats.Rounds++;
         waveCounter.text = waveNumber.ToString();
+        enemyCount = 0;
         for (int i = 0; i < waveNumber; i++)
         {
             SpawnEnemy();
-            
+            enemyCount++;
             yield return new WaitForSeconds(0.5f);
         }
         isOver = true;
@@ -64,7 +82,7 @@ public class Wave_Spawner : MonoBehaviour {
     {
        enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
         Enemy script = enemy.GetComponent<Enemy>();
-        script.health = 100 + waveNumber * 10;
+        script.health = 100 + waveNumber * 20;
     }
 
 }

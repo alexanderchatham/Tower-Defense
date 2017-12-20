@@ -439,6 +439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverColor: {r: 1, g: 0.5441177, b: 0.5441177, a: 0}
   notenoughmoney: {r: 0, g: 0, b: 0, a: 0}
+  finalRouteColor: {r: 0.07586192, g: 1, b: 0, a: 0}
   positionOffSet: {x: 0, y: 0.5, z: 0}
-  arrayPosition: 0
+  i: 0
+  j: 0
   turret: {fileID: 0}

@@ -5,10 +5,12 @@ public class Node : MonoBehaviour {
 
     public Color hoverColor;
     public Color notenoughmoney;
+    public Color finalRouteColor;
     public Vector3 positionOffSet;
     
     public int i;
     public int j;
+    private bool usedInFinal = false;
 
     [Header("Optional")]
     public GameObject turret;
@@ -17,28 +19,31 @@ public class Node : MonoBehaviour {
     private Color startColor;
 
     BuildManager buildManager;
+    GameMap gameMap;
+    Wave_Spawner waveSpawner;
 
     private void Start()
     {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
         buildManager = BuildManager.instance;
+        gameMap = GameMap.instance;
+        waveSpawner = Wave_Spawner.instance;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        //if there is not a turret and the turret switch is true set 
-        if (!turret && GameMap.instance.GetNodeBool(i,j) )
+        if (gameMap.GetFinalBool(i, j) && rend.material.color != finalRouteColor)
         {
-            GameMap.instance.SetNodeBool(i, j, false);
-            GameMap.instance.findBestRoute();
+            rend.material.color = finalRouteColor;
+            usedInFinal = true;
         }
-        if (turret && !GameMap.instance.GetNodeBool(i, j))
+        if (!gameMap.GetFinalBool(i, j) && rend.material.color != startColor)
         {
-            GameMap.instance.SetNodeBool(i, j, true);
-            GameMap.instance.findBestRoute();
+            rend.material.color = startColor;
         }
     }
+
 
     public Vector3 GetBuildPosition ()
     {
@@ -55,7 +60,8 @@ public class Node : MonoBehaviour {
 
         if (!buildManager.CanBuild)
             return;
-
+        if (waveSpawner.enemyCount > 0)
+            return;
         buildManager.BuildTurretOn(this);
         }
 
@@ -68,9 +74,13 @@ public class Node : MonoBehaviour {
         if (!buildManager.CanBuild)
             return;
         if (buildManager.HasMoney)
+        {
             rend.material.color = hoverColor;
-        else
+        }
+        
+        if (!buildManager.HasMoney)
             rend.material.color = notenoughmoney;
+        
     }
 
     private void OnMouseExit()
