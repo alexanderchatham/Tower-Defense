@@ -60,7 +60,7 @@ public class Node : MonoBehaviour {
 
         if (!buildManager.CanBuild)
             return;
-        if (waveSpawner.enemyCount > 0)
+        if (Wave_Spawner.enemyCount > 0 || turret)
             return;
         buildManager.BuildTurretOn(this);
         }
@@ -73,7 +73,7 @@ public class Node : MonoBehaviour {
 
         if (!buildManager.CanBuild)
             return;
-        if (buildManager.HasMoney)
+        if (buildManager.HasMoney && !gameMap.GetNodeBool(i,j))
         {
             rend.material.color = hoverColor;
         }

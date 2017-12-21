@@ -16,7 +16,7 @@ public class Wave_Spawner : MonoBehaviour {
     private Transform enemy;
     public static Wave_Spawner instance;
     public GameMap gamemap;
-    public int enemyCount = 0;
+    public static int enemyCount = 0;
     void Awake()
     {
         if (instance != null)

@@ -48,7 +48,7 @@ public class EnemyMovement : MonoBehaviour {
         if (wavepointIndex >= Waypoints.points.Length - 1)
         {
             Destroy(gameObject);
-            Wave_Spawner.instance.enemyCount--;
+            Wave_Spawner.enemyCount--;
             PlayerStats.Lives--;
             return;
         }

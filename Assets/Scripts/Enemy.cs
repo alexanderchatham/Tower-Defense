@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour {
         PlayerStats.Money += worth;
         GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(effect, 5f);
-        Wave_Spawner.instance.enemyCount--;
+        Wave_Spawner.enemyCount--;
         Destroy(gameObject);
         
     }

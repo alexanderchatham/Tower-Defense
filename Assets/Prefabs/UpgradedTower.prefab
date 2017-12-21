@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4986389377732850}
   - component: {fileID: 95859762412760896}
   - component: {fileID: 114995554652099460}
+  - component: {fileID: 65041351873860652}
   m_Layer: 0
   m_Name: UpgradedTower
   m_TagString: Untagged
@@ -53,6 +54,7 @@ GameObject:
   - component: {fileID: 4882179351064818}
   - component: {fileID: 33808228299374410}
   - component: {fileID: 23445598604108540}
+  - component: {fileID: 114297248301765310}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -94,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1864432123814678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3273187, y: 0.573, z: 98.092}
+  m_LocalPosition: {x: -0.39530802, y: 0.00013409829, z: -97.1071}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4882179351064818}
@@ -144,6 +146,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1935842849992500}
   m_Mesh: {fileID: 4300000, guid: 439dad920c1cb934c9299223ef9cc912, type: 3}
+--- !u!65 &65041351873860652
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864432123814678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95859762412760896
 Animator:
   serializedVersion: 3
@@ -161,6 +175,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114297248301765310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1935842849992500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7cb43cb84d39f45bbeee42222b4e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverColor: {r: 0.94482756, g: 1, b: 0, a: 0}
+  parentNode: {fileID: 0}
+  selfReference: {fileID: 1864432123814678}
+  gameMap: {fileID: 0}
+  turret: {fileID: 114995554652099460}
 --- !u!114 &114995554652099460
 MonoBehaviour:
   m_ObjectHideFlags: 1
