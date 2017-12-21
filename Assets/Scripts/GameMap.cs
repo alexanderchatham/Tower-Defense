@@ -18,8 +18,8 @@ struct nodeMem
 public class GameMap : MonoBehaviour {
     
     public GameObject nodeBlueprint;
-    private int mapWidth = 10;
-    private int mapHeight = 30;
+    private int mapWidth = 8;
+    private int mapHeight = 20;
     private int iglobal;
     private int jglobal;
     private int lastMove;

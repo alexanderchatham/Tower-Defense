@@ -60,8 +60,15 @@ public class Node : MonoBehaviour {
 
         if (!buildManager.CanBuild)
             return;
-        if (Wave_Spawner.enemyCount > 0 || turret)
+        if (Wave_Spawner.enemyCount > 0 && usedInFinal)
             return;
+        if (turret)
+        {
+            SellUpgrade select = turret.GetComponentInChildren<SellUpgrade>();
+            if(select)
+            buildManager.SelectTurret(select);
+            return;
+        }
         buildManager.BuildTurretOn(this);
         }
 
