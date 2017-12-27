@@ -38,7 +38,7 @@ public class Node : MonoBehaviour {
             rend.material.color = finalRouteColor;
             usedInFinal = true;
         }
-        if (!gameMap.GetFinalBool(i, j) && rend.material.color != startColor)
+        if (!gameMap.GetFinalBool(i, j) && rend.material.color != hoverColor)
         {
             rend.material.color = startColor;
         }
@@ -65,9 +65,13 @@ public class Node : MonoBehaviour {
         if (turret)
         {
             SellUpgrade select = turret.GetComponentInChildren<SellUpgrade>();
-            if(select)
-            buildManager.SelectTurret(select);
+            if (select)
+            {
+                buildManager.DeselectNode();
+                buildManager.SelectTurret(select);
+            }
             return;
+            
         }
         buildManager.BuildTurretOn(this);
         }

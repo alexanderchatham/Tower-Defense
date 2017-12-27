@@ -18,8 +18,8 @@ struct nodeMem
 public class GameMap : MonoBehaviour {
     
     public GameObject nodeBlueprint;
-    private int mapWidth = 8;
-    private int mapHeight = 20;
+    private int mapWidth = 10;
+    private int mapHeight = 30;
     private int iglobal;
     private int jglobal;
     private int lastMove;
@@ -171,8 +171,9 @@ public class GameMap : MonoBehaviour {
             if(routelengths[j]== 1)
             {
                 routelengths[j] = lookahead(0,j,-1);
-                if (routelengths[bestroute] <= 0)
+                if (routelengths[bestroute] <= 0 || routelengths[j] < routelengths[bestroute])
                 {
+                    
                     bestroute = j;
                     jglobal = j;
                 }
@@ -182,7 +183,7 @@ public class GameMap : MonoBehaviour {
         }
         for (int j = 0; j < mapWidth; j++)
         {
-            if (routelengths[j] >= mapHeight - 1 && routelengths[bestroute] > routelengths[j])
+            if (routelengths[j] >= mapHeight - 1 && (routelengths[bestroute] > routelengths[j] || routelengths[bestroute] < mapHeight-1))
             {
                 bestroute = j;
                 jglobal = j;
